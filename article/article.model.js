@@ -9,4 +9,4 @@ var articleSchema = new mongoose.Schema({
 });
 var Article = mongoose.model("Article", articleSchema);
 module.exports = Article;
-//# sourceMappingURL=Article.js.map
+//# sourceMappingURL=article.model.js.map
