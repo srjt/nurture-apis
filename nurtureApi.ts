@@ -3,6 +3,7 @@ import bodyParser = require('body-parser');
 import requestLogger  = require("./services/requestLogger");
 
 import  * as articleRouter  from  "./article/article.routing";
+import  * as sourceRouter  from  "./source/source.routing";
 
 export class NurtureApi {
     /**
@@ -22,15 +23,13 @@ export class NurtureApi {
      * @param app - express application
      */
     private configureMiddleware(app: express.Express) {
-
-app.use(bodyParser.json());
+        app.use(bodyParser.json());
         app.use(requestLogger);
     }
 
     private configureRoutes(app: express.Express) {
         app.use("/api", articleRouter);
-        // mount more routers here
-        // e.g. app.use("/organisation", organisationRouter);
+        app.use("/api", sourceRouter);
     }
 
     public run() {

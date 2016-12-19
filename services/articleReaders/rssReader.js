@@ -39,9 +39,9 @@ var RSSReader = (function () {
         new htmlParser_1.HtmlParser().findThumbnailImage(feed, function (imgSrc) {
             callback(new Article({
                 title: feed.title,
-                url: feed.link,
-                date: feed.published,
-                picUrl: imgSrc
+                thumbnail: imgSrc,
+                link: feed.link,
+                publishedDate: feed.published
             }));
         });
     };

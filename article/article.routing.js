@@ -5,7 +5,7 @@ var articleRouter = express.Router();
 var articleLib = new article_lib_1.ArticleLib();
 articleRouter.get('/articles', function (request, response) {
     articleLib.getAll(function (articles) {
-        response.send({ info: 'Artiles found successfully', data: articles });
+        response.send({ info: 'Articles found successfully', data: articles });
     }, function (err) {
         response.send({ info: 'Erro getting Articles', error: err });
     });
@@ -16,15 +16,9 @@ articleRouter.get('/articles', function (request, response) {
     // 		var c = new Date(a.date);
     // 		var d = new Date(b.date);
     // 		return d.getTime() - c.getTime();
-    // 		});
+    //		});
     // 	response.send({info: 'Artiles found successfully', data: articles});
     // });
-    //	Article.find((err, Articles) => {
-    //        if (err) {
-    //            res.json({info: 'error during find Articles', error: err});
-    //        };
-    //        res.json({info: 'Articles found successfully', data: getTestArticles().data});
-    //    });
 });
 articleRouter.post('/article', function (request, response) {
     console.log(request.body);

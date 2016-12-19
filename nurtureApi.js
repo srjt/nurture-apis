@@ -2,6 +2,7 @@
 var bodyParser = require('body-parser');
 var requestLogger = require("./services/requestLogger");
 var articleRouter = require("./article/article.routing");
+var sourceRouter = require("./source/source.routing");
 var NurtureApi = (function () {
     /**
      * @param app - express application
@@ -25,8 +26,7 @@ var NurtureApi = (function () {
     };
     NurtureApi.prototype.configureRoutes = function (app) {
         app.use("/api", articleRouter);
-        // mount more routers here
-        // e.g. app.use("/organisation", organisationRouter);
+        app.use("/api", sourceRouter);
     };
     NurtureApi.prototype.run = function () {
         this.app.listen(this.port);

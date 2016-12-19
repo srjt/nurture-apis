@@ -2,7 +2,6 @@
 var mongoose = require("mongoose");
 ;
 var articleSchema = new mongoose.Schema({
-    source: mongoose.Schema.Types.ObjectId,
     title: String,
     thumbnail: String,
     link: String,

@@ -7,7 +7,7 @@ let articleLib = new ArticleLib();
 
 articleRouter.get('/articles', (request: express.Request, response: express.Response) => {
 	articleLib.getAll((articles)=>{
-		response.send({info: 'Artiles found successfully', data: articles});
+		response.send({info: 'Articles found successfully', data: articles});
 	},(err)=>{
 		response.send({info: 'Erro getting Articles', error: err});
 	});
