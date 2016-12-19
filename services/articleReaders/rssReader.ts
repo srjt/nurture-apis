@@ -9,9 +9,9 @@ export class RSSReader {
  	constructor(){
 		this.rssUrls = new Array<string>();
 		//TODO: read it from configs
-		// this.rssUrls.push("http://weelicious.com/feed/");
+		this.rssUrls.push("http://weelicious.com/feed/");
 		this.rssUrls.push("http://www.scarymommy.com/feed/");
-		// this.rssUrls.push("http://www.momtastic.com/feed/");
+		this.rssUrls.push("http://www.momtastic.com/feed/");
 	}
 
 	public read(callback){

@@ -57,13 +57,18 @@ export class HtmlParser {
 	}
 	private isImgOnSameDomain(imgSrc, url){
 
- 		//var result = imgSrc && this.getDomainNameFromUrl(url) === this.getDomainNameFromUrl(imgSrc);
- 		var result = imgSrc && imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0;
+  		var result = imgSrc &&
+  					 imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0 &&
+  					 !this.isAvatarImg(imgSrc);
  		if(!result){
  			console.log('IMG ' + imgSrc);
  			console.log('URL ' + url);
  		}
  		return result
+	}
+	private isAvatarImg(imgSrc){
+		let avatarUrl = "gravatar";
+		return imgSrc.indexOf(avatarUrl) >=0;
 	}
 	private getDomainNameFromUrl(url){
 		var domain;

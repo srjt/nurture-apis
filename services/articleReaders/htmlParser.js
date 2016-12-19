@@ -57,13 +57,18 @@ var HtmlParser = (function () {
         return url;
     };
     HtmlParser.prototype.isImgOnSameDomain = function (imgSrc, url) {
-        //var result = imgSrc && this.getDomainNameFromUrl(url) === this.getDomainNameFromUrl(imgSrc);
-        var result = imgSrc && imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0;
+        var result = imgSrc &&
+            imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0 &&
+            !this.isAvatarImg(imgSrc);
         if (!result) {
             console.log('IMG ' + imgSrc);
             console.log('URL ' + url);
         }
         return result;
+    };
+    HtmlParser.prototype.isAvatarImg = function (imgSrc) {
+        var avatarUrl = "gravatar";
+        return imgSrc.indexOf(avatarUrl) >= 0;
     };
     HtmlParser.prototype.getDomainNameFromUrl = function (url) {
         var domain;

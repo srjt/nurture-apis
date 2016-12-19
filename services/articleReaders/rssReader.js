@@ -6,9 +6,9 @@ var RSSReader = (function () {
     function RSSReader() {
         this.rssUrls = new Array();
         //TODO: read it from configs
-        // this.rssUrls.push("http://weelicious.com/feed/");
+        this.rssUrls.push("http://weelicious.com/feed/");
         this.rssUrls.push("http://www.scarymommy.com/feed/");
-        // this.rssUrls.push("http://www.momtastic.com/feed/");
+        this.rssUrls.push("http://www.momtastic.com/feed/");
     }
     RSSReader.prototype.read = function (callback) {
         var _this = this;
