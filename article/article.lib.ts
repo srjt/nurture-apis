@@ -1,14 +1,17 @@
 //reference: https://seanmcgary.com/posts/how-to-structure-a-nodejs-express-project
-let articleModel = require('./article.model');
+import * as Article from './article.model';
 
 
-let articleLib = {
-    getAll() {
-        return getTestArticles().data;
-        // return articleModel.find();
+export class  ArticleLib  {
+
+    constructor(){
+
     }
-}
-function getTestArticles(){
+    public getAll() {
+        return this.getTestArticles().data;
+         // return  Article.find(()=>{});
+    }
+    private getTestArticles(){
     return {
     "data": [{
         "picUrl": "http://www.brainy-child.com/images/0553378252.jpg",
@@ -64,5 +67,7 @@ function getTestArticles(){
     }]
 }
 }
+}
 
-export = articleLib;
+
+//export = articleLib;

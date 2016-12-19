@@ -1,8 +1,7 @@
 import express = require("express");
 import requestLogger  = require("./services/requestLogger");
 
-
-import articleRouter = require("./article/article.routing");
+import  * as articleRouter  from  "./article/article.routing";
 
 export class NurtureApi {
     /**

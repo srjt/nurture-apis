@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "feed-read": "0.0.1"
   }
 }

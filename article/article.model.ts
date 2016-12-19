@@ -1,20 +1,21 @@
 import * as mongoose from "mongoose";
-
 interface IArticle{
-    articleId: string;
     title:string;
     thumbnail:string;
     url:string;
+    picUrl:string,
+    date: Date;
 }
 
 interface IArticleModel extends IArticle, mongoose.Document{};
 var articleSchema = new mongoose.Schema({
-    articleId: String,
     title: String,
     thumbnail: String,
     url: String,
+    picUrl: String,
+    date: Date
 });
 
-var Article = mongoose.model<IArticleModel>("Article", articleSchema);
+let Article = mongoose.model<IArticleModel>("Article", articleSchema);
 
-export = Article;
+export = Article;	
