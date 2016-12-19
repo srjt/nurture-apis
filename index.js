@@ -2,6 +2,8 @@
 "use strict";
 var express = require('express');
 var nurtureApi_1 = require('./nurtureApi');
+var mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost/nurture");
 var port = 3000; //or from a configuration file
 var api = new nurtureApi_1.NurtureApi(express(), port);
 api.run();

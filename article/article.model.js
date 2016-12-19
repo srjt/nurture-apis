@@ -2,11 +2,11 @@
 var mongoose = require("mongoose");
 ;
 var articleSchema = new mongoose.Schema({
+    source: mongoose.Schema.Types.ObjectId,
     title: String,
     thumbnail: String,
-    url: String,
-    picUrl: String,
-    date: Date
+    link: String,
+    publishedDate: Date
 });
 var Article = mongoose.model("Article", articleSchema);
 module.exports = Article;

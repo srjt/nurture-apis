@@ -1,4 +1,5 @@
 import express = require("express");
+import bodyParser = require('body-parser');
 import requestLogger  = require("./services/requestLogger");
 
 import  * as articleRouter  from  "./article/article.routing";
@@ -9,7 +10,6 @@ export class NurtureApi {
      * @param port - port to listen on
      */
     constructor(private app: express.Express, private port: number) {
-
         this.configureMiddleware(app);
         this.configureRoutes(app);
         
@@ -18,10 +18,12 @@ export class NurtureApi {
         });
     }
 
-    /**
+    /** 
      * @param app - express application
      */
     private configureMiddleware(app: express.Express) {
+
+app.use(bodyParser.json());
         app.use(requestLogger);
     }
 

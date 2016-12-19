@@ -42,9 +42,9 @@ export class RSSReader {
  			callback(new Article(
 			{
 				title: feed.title,
-				url: feed.link,
-				date: feed.published,
-				picUrl: imgSrc
+				thumbnail: imgSrc,
+				link: feed.link,
+				publishedDate: feed.published
 			}))
  		});
 	}

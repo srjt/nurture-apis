@@ -1,4 +1,5 @@
 "use strict";
+var bodyParser = require('body-parser');
 var requestLogger = require("./services/requestLogger");
 var articleRouter = require("./article/article.routing");
 var NurtureApi = (function () {
@@ -19,6 +20,7 @@ var NurtureApi = (function () {
      * @param app - express application
      */
     NurtureApi.prototype.configureMiddleware = function (app) {
+        app.use(bodyParser.json());
         app.use(requestLogger);
     };
     NurtureApi.prototype.configureRoutes = function (app) {
