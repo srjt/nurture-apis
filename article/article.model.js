@@ -2,6 +2,7 @@
 var mongoose = require("mongoose");
 ;
 var articleSchema = new mongoose.Schema({
+    source: { type: mongoose.Schema.Types.ObjectId, ref: 'Source' },
     title: String,
     thumbnail: String,
     link: String,

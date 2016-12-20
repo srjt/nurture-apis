@@ -60,10 +60,6 @@ var HtmlParser = (function () {
         var result = imgSrc &&
             imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0 &&
             !this.isAvatarImg(imgSrc);
-        if (!result) {
-            console.log('IMG ' + imgSrc);
-            console.log('URL ' + url);
-        }
         return result;
     };
     HtmlParser.prototype.isAvatarImg = function (imgSrc) {

@@ -4,6 +4,7 @@ import requestLogger  = require("./services/requestLogger");
 
 import  * as articleRouter  from  "./article/article.routing";
 import  * as sourceRouter  from  "./source/source.routing";
+import  * as crawlerRouter  from  "./crawler/crawler.routing";
 
 export class NurtureApi {
     /**
@@ -30,6 +31,7 @@ export class NurtureApi {
     private configureRoutes(app: express.Express) {
         app.use("/api", articleRouter);
         app.use("/api", sourceRouter);
+        app.use("/api", crawlerRouter);
     }
 
     public run() {

@@ -13,14 +13,26 @@ export class  SourceLib  {
             success(sources);
         });
     }
+    public getByName(name, success, error){
+        Source.find({name:name},(err, article)=>{
+            if(err){
+                error(error);
+            }
+            success(article);
+        })
+    }
     public save(newSource, success, error){
         if(newSource){ 
-            let sourceToSave = new Source(newSource);
-            sourceToSave.save((err)=>{
-                if(err){
-                    error(err);
-                }
-                success(sourceToSave);
+            this.getByName(newSource.name,()=>{
+                error('Source already exists')
+            },()=>{
+                let sourceToSave = new Source(newSource);
+                sourceToSave.save((err)=>{
+                    if(err){
+                        error(err);
+                    }
+                    success(sourceToSave);
+                });    
             });
         }
         else{

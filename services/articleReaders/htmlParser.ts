@@ -60,10 +60,7 @@ export class HtmlParser {
   		var result = imgSrc &&
   					 imgSrc.indexOf(this.getDomainNameFromUrl(url)) >= 0 &&
   					 !this.isAvatarImg(imgSrc);
- 		if(!result){
- 			console.log('IMG ' + imgSrc);
- 			console.log('URL ' + url);
- 		}
+ 		 
  		return result
 	}
 	private isAvatarImg(imgSrc){

@@ -6,24 +6,42 @@ export class  ArticleLib  {
 
     constructor(){
     }
-    public getAll(success, error) {
-        Article.find((err, articles)=>{
+    public getAll(pageNo, pageSize, success, error) {
+        pageNo = parseInt(pageNo) || 1;
+        pageSize = parseInt(pageSize) || 10;
+        Article.find({},(err, articles)=>{
             if(err){
                 error(err);
             }
             success(articles);
-        });
+        }).sort({publishedDate: -1})
+          .skip(pageNo*pageSize)
+          .limit(pageSize);
+    }
+    public getByTitle(title, success, error){
+        Article.findOne({title:title},(err, article)=>{
+            if(err){
+                error(error);
+            }
+            success(article);
+        })
     }
     public save(newArticle, success, error){
         if(newArticle){ 
-                    console.log(newArticle);
-
-            let articleToSave = new Article(newArticle);
-            articleToSave.save((err)=>{
-                if(err){
-                    error(err);
+            this.getByTitle(newArticle.title, (existingArticle)=>{ //TODO: check should based on title and source
+                if(existingArticle === null){
+                    let articleToSave = new Article(newArticle);
+                    articleToSave.save((err)=>{
+                        if(err){
+                            error(err);
+                        }
+                        success(articleToSave);
+                    });  
+                }else{
+                    error('Article already exists ' + existingArticle);
                 }
-                success(articleToSave);
+            },(err)=>{
+                error(err)  
             });
         }
         else{

@@ -11,14 +11,26 @@ var SourceLib = (function () {
             success(sources);
         });
     };
+    SourceLib.prototype.getByName = function (name, success, error) {
+        Source.find({ name: name }, function (err, article) {
+            if (err) {
+                error(error);
+            }
+            success(article);
+        });
+    };
     SourceLib.prototype.save = function (newSource, success, error) {
         if (newSource) {
-            var sourceToSave_1 = new Source(newSource);
-            sourceToSave_1.save(function (err) {
-                if (err) {
-                    error(err);
-                }
-                success(sourceToSave_1);
+            this.getByName(newSource.name, function () {
+                error('Source already exists');
+            }, function () {
+                var sourceToSave = new Source(newSource);
+                sourceToSave.save(function (err) {
+                    if (err) {
+                        error(err);
+                    }
+                    success(sourceToSave);
+                });
             });
         }
         else {
