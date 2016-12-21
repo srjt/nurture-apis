@@ -1,52 +1,63 @@
 //reference: https://seanmcgary.com/posts/how-to-structure-a-nodejs-express-project
-import * as Article from './article.model';
+import * as Article from "./article.model";
+var Promise = require("promise");
 
 
 export class  ArticleLib  {
 
     constructor(){
     }
-    public getAll(pageNo, pageSize, success, error) {
-        pageNo = parseInt(pageNo) || 1;
-        pageSize = parseInt(pageSize) || 10;
-        Article.find({},(err, articles)=>{
-            if(err){
-                error(err);
-            }
-            success(articles);
-        }).sort({publishedDate: -1})
-          .skip(pageNo*pageSize)
-          .limit(pageSize);
-    }
-    public getByTitle(title, success, error){
-        Article.findOne({title:title},(err, article)=>{
-            if(err){
-                error(error);
-            }
-            success(article);
-        })
-    }
-    public save(newArticle, success, error){
-        if(newArticle){ 
-            this.getByTitle(newArticle.title, (existingArticle)=>{ //TODO: check should based on title and source
-                if(existingArticle === null){
-                    let articleToSave = new Article(newArticle);
-                    articleToSave.save((err)=>{
-                        if(err){
-                            error(err);
-                        }
-                        success(articleToSave);
-                    });  
-                }else{
-                    error('Article already exists ' + existingArticle);
+    public getAll(pageNo, pageSize) {
+        return new Promise( (fulfill, reject) => {
+            pageNo = parseInt(pageNo) || 1;    
+            pageSize = parseInt(pageSize) || 10;
+            Article.find({},(err, articles)=>{
+                if(err){
+                    reject(err);
                 }
-            },(err)=>{
-                error(err)  
-            });
-        }
-        else{
-            error('No a valid article');
-        }
+                fulfill(articles);
+            }).sort({publishedDate: -1})
+              .skip(pageNo*pageSize)
+              .limit(pageSize);
+        });
+        
+    }
+    public getByTitle(title){
+        return new Promise((fulfill, reject)=>{
+            Article.findOne({title:title},(err, article)=>{
+                if(err){
+                    reject(err);
+                }
+                fulfill(article);
+            })
+        });
+    }
+    public doesArticleAreadyExist(title){
+        return new Promise((fulfill, reject) =>{
+            this.getByTitle(title).then((existingArticle)=>{
+                if(existingArticle===null){
+                    fulfill(false);
+                }
+                reject(false);
+            },()=>{
+                reject(false);
+            })
+        });
+    }
+    public save(newArticle){
+        return new Promise((fulfill, reject)=>{
+            this.doesArticleAreadyExist(newArticle.title).then((exists)=>{
+                let articleToSave = new Article(newArticle);
+                articleToSave.save((err)=>{
+                    if(err){
+                        reject(err);
+                    }
+                    fulfill(articleToSave)
+                })
+            }, ()=>{
+                reject("Article already exists \"" + newArticle.title + "\"");
+            })
+        });
     }
 
 }

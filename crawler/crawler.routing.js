@@ -6,24 +6,21 @@ var article_lib_1 = require("../article/article.lib");
 var crawlerRouter = express.Router();
 var sourceLib = new source_lib_1.SourceLib();
 var articleLib = new article_lib_1.ArticleLib();
-crawlerRouter.get('/crawl', function (request, response) {
-    sourceLib.getAll(function (sources) {
+crawlerRouter.get("/crawl", function (request, response) {
+    sourceLib.getAll().then(function (sources) {
         var rssReader = new rssReader_1.RSSReader(sources);
-        var newArticleFound = 10;
         var articles = rssReader.read(function (articles) {
             for (var _i = 0, articles_1 = articles; _i < articles_1.length; _i++) {
                 var article = articles_1[_i];
-                articleLib.save(article, function (savedArticle) {
-                    console.log('saved article ' + newArticleFound);
-                    newArticleFound++;
+                articleLib.save(article).then(function (savedArticle) {
                 }, function (err) {
-                    console.error('Error saving article ' + err);
+                    console.log("Error saving article " + err);
                 });
             }
-            response.send({ info: 'Artiles crawled successfully', data: 'Total articles found: ' + newArticleFound });
+            response.send({ status: "SUCCESS", data: "Total articles crawled: " + articles.length });
         });
     }, function (err) {
-        response.send({ info: 'Error crawling articles' });
+        response.send({ status: "ERROR" });
     });
 });
 module.exports = crawlerRouter;

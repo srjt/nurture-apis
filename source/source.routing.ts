@@ -4,20 +4,19 @@ import { SourceLib } from "./source.lib"
 let sourceRouter = express.Router();
 let sourceLib = new SourceLib();
 
-sourceRouter.get('/sources', (request: express.Request, response: express.Response) => {
-	sourceLib.getAll((sources)=>{
-		response.send({info: 'Sources found successfully', data: sources});
+sourceRouter.get("/sources", (request: express.Request, response: express.Response) => {
+	sourceLib.getAll().then((sources)=>{
+		response.send({status: "SUCCESS", data: sources});
 	},(err)=>{
-		response.send({info: 'Erro getting Sources', error: err});
-	});
+		response.send({status: "ERROR", error: err});
+	})
 });
 
-sourceRouter.post('/source', (request: express.Request, response: express.Response)=>{
-	console.log(request.body);
- 	sourceLib.save(request.body, (savedSource)=>{
-		response.send({info: 'Source saved successfully', source: savedSource});
+sourceRouter.post("/source", (request: express.Request, response: express.Response)=>{
+	sourceLib.save(request.body).then((savedSource)=>{
+		response.send({status: "SUCCESS", source: savedSource});
 	},(err)=>{
-		response.send({info: 'Error saving Source', error: err})
-	});
+		response.send({status: "ERROR", error: err})
+	})
 })
 export = sourceRouter;

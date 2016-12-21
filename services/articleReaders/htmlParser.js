@@ -1,5 +1,5 @@
 "use strict";
-var cheerio = require('cheerio');
+var cheerio = require("cheerio");
 var request = require("request");
 var HtmlParser = (function () {
     function HtmlParser() {
@@ -23,11 +23,11 @@ var HtmlParser = (function () {
             }
             if (!err && response.statusCode == 200) {
                 var $ = cheerio.load(html);
-                var images = $('body img');
+                var images = $("body img");
                 _this.selectSpecificThumbnail(images, url, callback, error);
             }
             else {
-                error('No image found on url ' + url);
+                error("No image found on url " + url);
             }
         });
     };
@@ -46,7 +46,7 @@ var HtmlParser = (function () {
             callback(thumbnailSrc);
         }
         else {
-            error('No image found in list');
+            error("No image found in list");
         }
     };
     //Sometime src starts with '//'

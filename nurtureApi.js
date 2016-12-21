@@ -1,5 +1,5 @@
 "use strict";
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 var requestLogger = require("./services/requestLogger");
 var articleRouter = require("./article/article.routing");
 var sourceRouter = require("./source/source.routing");

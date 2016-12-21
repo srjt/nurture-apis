@@ -4,11 +4,7 @@ var htmlParser_1 = require("./htmlParser");
 var feed = require("feed-read");
 var RSSReader = (function () {
     function RSSReader(rssSrouces) {
-        // this.rssUrls = new Array<string>();
         this.rssSources = rssSrouces;
-        // this.rssUrls.push("http://weelicious.com/feed/");
-        // this.rssUrls.push("http://www.scarymommy.com/feed/");
-        // this.rssUrls.push("http://www.momtastic.com/feed/");
     }
     RSSReader.prototype.read = function (callback) {
         var _this = this;
@@ -17,7 +13,6 @@ var RSSReader = (function () {
         var feedCount = 0;
         //https://www.npmjs.com/package/feed-read#feedrssrss_string-callback
         this.rssSources.forEach(function (rssSource) {
-            // console.log(rssSource);
             feed(rssSource.link, function (err, feeds) {
                 urlCountr--;
                 if (err)

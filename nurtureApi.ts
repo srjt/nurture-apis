@@ -1,5 +1,5 @@
 import express = require("express");
-import bodyParser = require('body-parser');
+import bodyParser = require("body-parser");
 import requestLogger  = require("./services/requestLogger");
 
 import  * as articleRouter  from  "./article/article.routing";

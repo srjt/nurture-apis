@@ -7,24 +7,21 @@ let crawlerRouter = express.Router();
 let sourceLib = new SourceLib();
 let articleLib = new ArticleLib();
  
-crawlerRouter.get('/crawl', (request: express.Request, response: express.Response) => {
-
-	sourceLib.getAll((sources)=>{
+crawlerRouter.get("/crawl", (request: express.Request, response: express.Response) => {
+	sourceLib.getAll().then((sources)=>{
 		let rssReader = new RSSReader(sources);
 		let articles = rssReader.read((articles) => {
 			for(let article of articles){ //TODO: do the 'existing article ' check even before parsing html
-				articleLib.save(article, (savedArticle)=>{
+				articleLib.save(article).then((savedArticle)=>{
 				},(err)=>{
-					console.error('Error saving article ' + err);
-				});	
+					console.log("Error saving article "+ err);
+				});
 			}
-			response.send({info: 'Artiles crawled successfully', data: 'Total articles crawled: ' +  articles.length});
-		});	
+			response.send({status: "SUCCESS", data: "Total articles crawled: " +  articles.length});
+		});
 	},(err)=>{
-		response.send({info:'Error crawling articles'})
+		response.send({status:"ERROR"})
 	})
-
-	
 });
 
 export = crawlerRouter;

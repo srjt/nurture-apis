@@ -1,51 +1,62 @@
 "use strict";
 //reference: https://seanmcgary.com/posts/how-to-structure-a-nodejs-express-project
-var Article = require('./article.model');
+var Article = require("./article.model");
+var Promise = require("promise");
 var ArticleLib = (function () {
     function ArticleLib() {
     }
-    ArticleLib.prototype.getAll = function (pageNo, pageSize, success, error) {
-        pageNo = parseInt(pageNo) || 1;
-        pageSize = parseInt(pageSize) || 10;
-        Article.find({}, function (err, articles) {
-            if (err) {
-                error(err);
-            }
-            success(articles);
-        }).sort({ publishedDate: -1 })
-            .skip(pageNo * pageSize)
-            .limit(pageSize);
-    };
-    ArticleLib.prototype.getByTitle = function (title, success, error) {
-        Article.findOne({ title: title }, function (err, article) {
-            if (err) {
-                error(error);
-            }
-            success(article);
+    ArticleLib.prototype.getAll = function (pageNo, pageSize) {
+        return new Promise(function (fulfill, reject) {
+            pageNo = parseInt(pageNo) || 1;
+            pageSize = parseInt(pageSize) || 10;
+            Article.find({}, function (err, articles) {
+                if (err) {
+                    reject(err);
+                }
+                fulfill(articles);
+            }).sort({ publishedDate: -1 })
+                .skip(pageNo * pageSize)
+                .limit(pageSize);
         });
     };
-    ArticleLib.prototype.save = function (newArticle, success, error) {
-        if (newArticle) {
-            this.getByTitle(newArticle.title, function (existingArticle) {
-                if (existingArticle === null) {
-                    var articleToSave_1 = new Article(newArticle);
-                    articleToSave_1.save(function (err) {
-                        if (err) {
-                            error(err);
-                        }
-                        success(articleToSave_1);
-                    });
+    ArticleLib.prototype.getByTitle = function (title) {
+        return new Promise(function (fulfill, reject) {
+            Article.findOne({ title: title }, function (err, article) {
+                if (err) {
+                    reject(err);
                 }
-                else {
-                    error('Article already exists ' + existingArticle);
-                }
-            }, function (err) {
-                error(err);
+                fulfill(article);
             });
-        }
-        else {
-            error('No a valid article');
-        }
+        });
+    };
+    ArticleLib.prototype.doesArticleAreadyExist = function (title) {
+        var _this = this;
+        return new Promise(function (fulfill, reject) {
+            _this.getByTitle(title).then(function (existingArticle) {
+                if (existingArticle === null) {
+                    fulfill(false);
+                }
+                reject(false);
+            }, function () {
+                reject(false);
+            });
+        });
+    };
+    ArticleLib.prototype.save = function (newArticle) {
+        var _this = this;
+        return new Promise(function (fulfill, reject) {
+            _this.doesArticleAreadyExist(newArticle.title).then(function (exists) {
+                var articleToSave = new Article(newArticle);
+                articleToSave.save(function (err) {
+                    if (err) {
+                        reject(err);
+                    }
+                    fulfill(articleToSave);
+                });
+            }, function () {
+                reject("Article already exists \"" + newArticle.title + "\"");
+            });
+        });
     };
     return ArticleLib;
 }());

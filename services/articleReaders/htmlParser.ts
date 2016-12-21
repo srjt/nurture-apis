@@ -1,4 +1,4 @@
-var cheerio = require('cheerio');
+var cheerio = require("cheerio");
 var request = require("request");
 export class HtmlParser {
 
@@ -22,11 +22,11 @@ export class HtmlParser {
 			if(err){console.log(err);}
 			if (!err && response.statusCode == 200) {
 				var $ = cheerio.load(html);
-				var images = $('body img');
+				var images = $("body img");
 				this.selectSpecificThumbnail(images, url, callback, error);
 			}
 			else{
-				error('No image found on url ' + url);
+				error("No image found on url " + url);
 			}
 		});
 	}
@@ -45,7 +45,7 @@ export class HtmlParser {
  			callback(thumbnailSrc)
  		}
  		else{ 
- 			error('No image found in list');
+ 			error("No image found in list");
  		}
 	}
 	//Sometime src starts with '//'
