@@ -8,14 +8,14 @@ var ArticleLib = (function () {
     ArticleLib.prototype.getAll = function (pageNo, pageSize) {
         return new Promise(function (fulfill, reject) {
             pageNo = parseInt(pageNo) || 1;
-            pageSize = parseInt(pageSize) || 10;
+            pageSize = parseInt(pageSize) || 6;
             Article.find({}, function (err, articles) {
                 if (err) {
                     reject(err);
                 }
                 fulfill(articles);
             }).sort({ publishedDate: -1 })
-                .skip(pageNo * pageSize)
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize);
         });
     };

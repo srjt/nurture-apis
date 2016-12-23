@@ -5,7 +5,7 @@ let requestLogger: express.RequestHandler = (
     response: express.Response,
     next: express.NextFunction
 ) => {
-    console.info("${(new Date()).toUTCString()}|${request.method}|${request.url}|${request.ip}");
+    console.info(`${(new Date()).toUTCString()}|${request.method}|${request.url}|${request.ip}`);
     next();
 }
 

@@ -5,9 +5,9 @@ var articleRouter = express.Router();
 var articleLib = new article_lib_1.ArticleLib();
 articleRouter.get("/articles", function (request, response) {
     articleLib.getAll(request.query.pageNo, request.query.pageSize).then(function (articles) {
-        response.send({ info: "SUCCESS", data: articles });
+        response.send({ status: "SUCCESS", data: articles });
     }, function (err) {
-        response.send({ info: "ERROR", error: err });
+        response.send({ status: "ERROR", error: err });
     });
 });
 articleRouter.post('/article', function (request, response) {

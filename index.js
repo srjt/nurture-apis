@@ -7,5 +7,5 @@ mongoose.connect("mongodb://localhost/nurture");
 var port = 3000; //or from a configuration file
 var api = new nurtureApi_1.NurtureApi(express(), port);
 api.run();
-console.info("listening on ${port}");
+console.info("listening on " + port);
 //# sourceMappingURL=index.js.map

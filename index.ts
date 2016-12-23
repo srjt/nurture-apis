@@ -9,4 +9,4 @@ mongoose.connect("mongodb://localhost/nurture");
 let port = 3000; //or from a configuration file
 let api = new NurtureApi(express(), port);
 api.run();
-console.info("listening on ${port}");
+console.info(`listening on ${port}`);

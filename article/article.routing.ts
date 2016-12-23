@@ -6,9 +6,9 @@ let articleLib = new ArticleLib();
 
 articleRouter.get("/articles", (request: express.Request, response: express.Response) => {
 	articleLib.getAll(request.query.pageNo, request.query.pageSize).then((articles)=>{
-		response.send({info: "SUCCESS", data: articles});
+		response.send({status: "SUCCESS", data: articles});
 	},(err)=>{
-		response.send({info: "ERROR", error: err});
+		response.send({status: "ERROR", error: err});
 	});
 });
 

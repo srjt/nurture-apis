@@ -17,7 +17,7 @@ export class  ArticleLib  {
                 }
                 fulfill(articles);
             }).sort({publishedDate: -1})
-              .skip(pageNo*pageSize)
+              .skip((pageNo-1)*pageSize)
               .limit(pageSize);
         });
         
