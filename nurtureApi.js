@@ -4,14 +4,16 @@ var requestLogger = require("./services/requestLogger");
 var articleRouter = require("./article/article.routing");
 var sourceRouter = require("./source/source.routing");
 var crawlerRouter = require("./crawler/crawler.routing");
+var https = require("https");
 var NurtureApi = (function () {
     /**
      * @param app - express application
      * @param port - port to listen on
      */
-    function NurtureApi(app, port) {
+    function NurtureApi(app, port, portSsl) {
         this.app = app;
         this.port = port;
+        this.portSsl = portSsl;
         this.configureMiddleware(app);
         this.configureRoutes(app);
         app.get("/api/ping", function (request, response) {
@@ -32,6 +34,12 @@ var NurtureApi = (function () {
     };
     NurtureApi.prototype.run = function () {
         this.app.listen(this.port);
+        console.info("listening on " + this.port);
+    };
+    NurtureApi.prototype.runHttps = function (key, cert) {
+        var credentails = { key: key, cert: cert, passphrase: "nurture!23" };
+        https.createServer(credentails, this.app).listen(this.portSsl);
+        console.info("listening on " + this.portSsl);
     };
     return NurtureApi;
 }());

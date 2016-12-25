@@ -8,7 +8,7 @@ var ArticleLib = (function () {
     ArticleLib.prototype.getAll = function (pageNo, pageSize) {
         return new Promise(function (fulfill, reject) {
             pageNo = parseInt(pageNo) || 1;
-            pageSize = parseInt(pageSize) || 6;
+            pageSize = parseInt(pageSize) || 13;
             Article.find({}, function (err, articles) {
                 if (err) {
                     reject(err);
